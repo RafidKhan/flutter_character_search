@@ -1,3 +1,4 @@
+import 'package:character_search/user_model.dart';
 import 'package:character_search/user_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -35,13 +36,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController textEditingController = TextEditingController();
 
-  final List<String> users = [
-    "Rafid Hussain Khan",
-    "Touhid",
-    "Mausum",
-    "Rafsan",
-    "Asif",
-    "SSL",
+  final List<UserModel> users = [
+    const UserModel(name: "Rafid Hussain Khan", email: "rafid@gmail.com"),
+    const UserModel(name: "Mausum Nandy", email: "mausum@gmail.com"),
+    const UserModel(name: "Rafsan Biswas", email: "rafsan@gmail.com"),
+    const UserModel(name: "Asif Malik", email: "asif@gmail.com"),
+    const UserModel(name: "Rezaul Karim", email: "rezaul@gmail.com"),
   ];
 
   @override
@@ -71,23 +71,27 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemBuilder: (context, index) {
                   final element = users[index];
 
-                  final name = element.toLowerCase().replaceAll(" ", "");
+                  final name = element.name.toLowerCase().replaceAll(" ", "");
+                  final email = element.email.toLowerCase().replaceAll(" ", "");
                   final query = textEditingController.text
                       .toLowerCase()
                       .replaceAll(" ", "");
 
                   if (query.isEmpty) {
                     return UserTile(
-                      name: element,
+                      model: element,
                       query: query,
                     );
                   }
 
                   if (query.contains(name) ||
                       name.contains(query) ||
-                      name == query) {
+                      query.contains(email) ||
+                      email.contains(query) ||
+                      name == query ||
+                      email == query) {
                     return UserTile(
-                      name: element,
+                      model: element,
                       query: query,
                     );
                   }
