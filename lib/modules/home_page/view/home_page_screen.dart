@@ -47,10 +47,19 @@ class HomePageScreen extends StatelessWidget {
                             query.contains(name) ||
                             name.contains(query) ||
                             name == query) {
-                          return UserTile(
-                            model: element,
-                            query: query,
-                          );
+                          return ValueListenableBuilder(
+                              valueListenable: controller.selectedAnimal,
+                              builder: (context, data, child) {
+                                return UserTile(
+                                  model: element,
+                                  query: query,
+                                  isSelected: element.id ==
+                                      controller.selectedAnimal.value?.id,
+                                  onSelect: () {
+                                    controller.selectAnimal(element);
+                                  },
+                                );
+                              });
                         }
 
                         return const SizedBox();

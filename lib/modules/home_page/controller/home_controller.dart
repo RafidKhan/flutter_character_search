@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class HomeController {
   HomeController() {
+    selectedAnimal.value = null;
     textEditingController.addListener(() {
       queryText.value = textEditingController.text.trim();
     });
@@ -10,6 +11,7 @@ class HomeController {
 
   final TextEditingController textEditingController = TextEditingController();
   final ValueNotifier<String> queryText = ValueNotifier("");
+  ValueNotifier<AnimalModel?> selectedAnimal = ValueNotifier(null);
 
   final List<AnimalModel> animals = [
     const AnimalModel(name: "Cat", id: 0),
@@ -24,4 +26,12 @@ class HomeController {
     const AnimalModel(name: "mIx cASe Word", id: 9),
     const AnimalModel(name: "numEriC 10 woRd", id: 10),
   ];
+
+  selectAnimal(AnimalModel animalModel) {
+    if (selectedAnimal.value?.id == animalModel.id) {
+      selectedAnimal.value = null;
+      return;
+    }
+    selectedAnimal.value = animalModel;
+  }
 }
